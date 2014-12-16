@@ -1,0 +1,33 @@
+class EmergencyTest
+
+instance variables
+    emergency : Emergency;
+    pos : Location;
+    patient1 : Patient;
+
+operations
+    private assertTrue: bool ==> ()
+        assertTrue(cond) == return
+    pre cond;
+        
+    private createEmergency: () ==> ()
+    createEmergency() ==
+    (
+        pos := new Location(5, 0);
+        patient1 := new Patient("Pacient", <Male>, 23, <Serious>);
+        emergency := new Emergency(pos, patient1, <Easy>);
+        
+    
+        -- Asserts
+        assertTrue( emergency.location = pos );
+        assertTrue( emergency.patient = patient1 );
+        assertTrue( emergency.road = <Easy> );
+    );
+
+    public static main: () ==> ()
+    main() ==
+    (
+        new EmergencyTest().createEmergency();
+    );
+    
+end EmergencyTest

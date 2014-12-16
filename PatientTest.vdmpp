@@ -1,0 +1,29 @@
+class PatientTest
+
+instance variables
+    patient1 : Patient;
+
+operations
+    private assertTrue: bool ==> ()
+        assertTrue(cond) == return
+    pre cond;
+		
+    private createPatient: () ==> ()
+    createPatient() ==
+    (
+        patient1 := new Patient("Pacient", <Male>, 23, <Serious>);
+    
+        -- Asserts
+        assertTrue( patient1.name  = "Pacient" );
+        assertTrue( patient1.gender  = <Male> );
+        assertTrue( patient1.age  = 23 );
+        assertTrue( patient1.injury_status = <Serious> );
+    );
+
+    public static main: () ==> ()
+    main() ==
+    (
+        new PatientTest().createPatient();
+    );
+
+end PatientTest

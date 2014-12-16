@@ -1,0 +1,26 @@
+class TransportTest
+
+instance variables
+    transport : Transport;
+
+operations
+    private assertTrue: bool ==> ()
+        assertTrue(cond) == return
+    pre cond;
+        
+    private createTransport: () ==> ()
+    createTransport() ==
+    (
+        transport := new Transport(<Ambulance>);
+    
+        -- Asserts
+        assertTrue( transport.type  = <Ambulance> );
+    );
+
+    public static main: () ==> ()
+    main() ==
+    (
+        new TransportTest().createTransport();
+    );
+    
+end TransportTest

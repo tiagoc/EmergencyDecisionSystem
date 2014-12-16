@@ -1,33 +1,37 @@
 class Location
 
 types
-	public pos_x = real;
-	public pos_y = real;
+	--public pos_x = real;
+	--public pos_y = real;
 	
-values
-
 instance variables
-	public Pos_X:pos_x:=0;
-	public Pos_Y:pos_y:=0;
+	public x: real := 0;
+	public y : real := 0;
 	
 operations
 	SquareRoot : real * real ==> real
-		SquareRoot (r,e) == (dcl x:real := 1, nextx: real := r;
-						while abs (x - nextx) >= e * x do
-						( x := nextx;
-							nextx := ((r / x) + x) / 2;
-						);
-			return nextx
-		);
+	SquareRoot (r,e) == (dcl x: real := 1, nextx: real := r;
+    	while abs (x - nextx) >= e * x do
+    	( x := nextx;
+    		nextx := ((r / x) + x) / 2;
+    	);
+		return nextx
+	);
 			
-	public calculate_distance: Location ==> real
-			calculate_distance(p) == (
-				return SquareRoot((((p.Pos_X-Pos_X)*(p.Pos_X-Pos_X))+((p.Pos_Y-Pos_Y)*(p.Pos_Y-Pos_Y))), 0.0001);
-			);
-
-functions
-
-
+    public calculate_distance: Location ==> real
+    calculate_distance(p) == (
+	   return SquareRoot((((p.x-x)*(p.x-x))+((p.y-y)*(p.y-y))), 0.0001);
+    );
+    		
+			
+	public Location: real * real  ==> Location
+		Location(posX, posY) == 
+		(
+			x := posX;
+			y := posY;
+			return self;
+		)
+	post x = posX and y = posY;
 
 
 end Location

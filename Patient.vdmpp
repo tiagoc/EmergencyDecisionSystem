@@ -7,11 +7,22 @@ types
 	public Injury_Status = <Serious> | <Medium> | <Light>;
 	
 instance variables
-	private name: String;
-	private gender: Gender;
-	private age: Age;
-	private injury_status: Injury_Status;
+	public name: String;
+	public gender: Gender;
+	public age: Age;
+	public injury_status: Injury_Status;
+	
+operations
 
-
+    public Patient: String * Gender * Age * Injury_Status  ==> Patient
+	Patient(nam, gen, ag, inj) == 
+	(
+        name := nam;
+        gender := gen ;
+        age := ag;
+        injury_status := inj;
+        return self;
+	)
+    post name = nam and gender = gen and age = ag and injury_status = inj;
 
 end Patient
