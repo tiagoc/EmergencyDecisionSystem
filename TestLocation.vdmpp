@@ -1,0 +1,27 @@
+class TestLocation
+
+operations
+	public AssertTrue : bool ==> ()
+				 AssertTrue(a) == return
+				 pre a;
+				 
+				 
+	public TestCreateLocation: () ==> ()
+	TestCreateLocation() ==
+	(
+		dcl tempLocation : Location := new Location();
+		AssertTrue(tempLocation.Pos_X = 0);
+		AssertTrue(tempLocation.Pos_Y = 0);
+	);
+	
+	
+	public TestCalculateDistance: () ==> ()
+	TestCalculateDistance() ==
+	(
+		dcl tempLoc1 : Location := new Location (0,0);
+		dcl tempLoc2 : Location := new Location (0,5);
+		AssertTrue(tempLoc1.calculate_distance(tempLoc2) = 5);
+	);
+	
+
+end TestLocation

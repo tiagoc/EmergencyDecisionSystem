@@ -11,6 +11,16 @@ instance variables
 	public Pos_Y:pos_y:=0;
 	
 operations
+
+	
+	public Location: real * real ==> Location
+	Location(x, y) ==
+	(
+		Pos_X := x;
+		Pos_Y := y;	
+	);
+	
+
 	SquareRoot : real * real ==> real
 		SquareRoot (r,e) == (dcl x:real := 1, nextx: real := r;
 						while abs (x - nextx) >= e * x do
@@ -23,7 +33,10 @@ operations
 	public calculate_distance: Location ==> real
 			calculate_distance(p) == (
 				return SquareRoot((((p.Pos_X-Pos_X)*(p.Pos_X-Pos_X))+((p.Pos_Y-Pos_Y)*(p.Pos_Y-Pos_Y))), 0.0001);
-			);
+			)
+			pre Pos_X <> p.Pos_X and Pos_Y <> p.Pos_Y
+			post RESULT > 0;
+			
 
 functions
 
