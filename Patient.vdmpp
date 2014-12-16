@@ -5,7 +5,8 @@ types
 	public Age = nat;
 	public Gender = <Male> | <Female>;
 	public Injury_Status = <Serious> | <Medium> | <Light>;
-	public Injury_Type = <Stroke> | <Accident> | <None>;
+	public Injury_Type = <Stroke> | <Accident> | <Disease> | <None>;
+	public Contact = nat;
 	
 instance variables
 	public name: String;
@@ -13,20 +14,22 @@ instance variables
 	public age: Age;
 	public injury_status: Injury_Status;
 	public injury_type: Injury_Type;
+	public contact: Contact;
 	
 operations
 
-    public Patient: String * Gender * Age * Injury_Status * Injury_Type  ==> Patient
-	Patient(nam, gen, ag, inj, injType) == 
-	(
-        name := nam;
-        gender := gen ;
-        age := ag;
-        injury_status := inj;
-        injury_type := injType;
-        return self;
-	)
+    public Patient: String * Gender * Age * Injury_Status * Injury_Type * Contact  ==> Patient
+		Patient(nam, gen, ag, inj, injType, cont) == 
+		(
+	        name := nam;
+	        gender := gen ;
+	        age := ag;
+	        injury_status := inj;
+	        injury_type := injType;
+	        contact := cont;
+	        return self;
+		)
 	pre ag > 0 and len nam > 0
-    post name = nam and gender = gen and age = ag and injury_status = inj;
+  post name = nam and gender = gen and age = ag and injury_status = inj;
 
 end Patient

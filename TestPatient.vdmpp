@@ -8,13 +8,14 @@ operations
     private createPatient: () ==> ()
     createPatient() ==
     (
-        dcl patient1 : Patient := new Patient("Pacient", <Male>, 23, <Serious>, <Stroke>);
+        dcl patient1 : Patient := new Patient("Pacient", <Male>, 23, <Serious>, <Stroke>, 964936931);
     
         -- Asserts
         assertTrue( patient1.name  = "Pacient" );
         assertTrue( patient1.gender  = <Male> );
         assertTrue( patient1.age  = 23 );
         assertTrue( patient1.injury_status = <Serious> );
+        assertTrue( patient1.contact = 964936931 );
     );
 
     public static main: () ==> ()

@@ -9,7 +9,7 @@ operations
     createEmergency() ==
     (
         dcl pos : Location := new Location(5, 0);
-        dcl patient1 : Patient := new Patient("Pacient", <Male>, 23, <Serious>, <Stroke>);
+        dcl patient1 : Patient := new Patient("Pacient", <Male>, 23, <Serious>, <Stroke>, 915487955);
         dcl emergency : Emergency := new Emergency(pos, patient1, <Easy>);
         
     
