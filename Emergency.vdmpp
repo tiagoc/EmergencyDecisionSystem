@@ -1,6 +1,11 @@
 class Emergency
 
-
+types
+	public Loc = Location;
+	public road_access = <Easy> | <Moderate> | <Hard>;
+	public Pat = Patient;
+	
+	
 
 
 end Emergency

@@ -1,6 +1,11 @@
 class Hospital
 
-
+types
+	public Loc = Location;
+	public Specialties = <Oncology> | <Cardiology>; -- ....
+	
+instance variables
+	public specialties: seq of Specialties;
 
 
 
