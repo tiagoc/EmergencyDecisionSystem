@@ -23,6 +23,7 @@ operations
         injury_status := inj;
         return self;
 	)
+	pre ag > 0 and len nam > 0
     post name = nam and gender = gen and age = ag and injury_status = inj;
 
 end Patient

@@ -1,10 +1,5 @@
 class EmergencyTest
 
-instance variables
-    emergency : Emergency;
-    pos : Location;
-    patient1 : Patient;
-
 operations
     private assertTrue: bool ==> ()
         assertTrue(cond) == return
@@ -13,9 +8,9 @@ operations
     private createEmergency: () ==> ()
     createEmergency() ==
     (
-        pos := new Location(5, 0);
-        patient1 := new Patient("Pacient", <Male>, 23, <Serious>);
-        emergency := new Emergency(pos, patient1, <Easy>);
+        dcl pos : Location := new Location(5, 0);
+        dcl patient1 : Patient := new Patient("Pacient", <Male>, 23, <Serious>);
+        dcl emergency : Emergency := new Emergency(pos, patient1, <Easy>);
         
     
         -- Asserts

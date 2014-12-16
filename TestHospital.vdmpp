@@ -1,9 +1,5 @@
 class HospitalTest
 
-instance variables
-    hospital : Hospital;
-    pos : Location;
-
 operations
     private assertTrue: bool ==> ()
         assertTrue(cond) == return
@@ -12,8 +8,8 @@ operations
     private createHospital: () ==> ()
     createHospital() ==
     (
-        pos := new Location(5, 0);
-        hospital := new Hospital(pos);
+        dcl pos : Location := new Location(5, 0);
+        dcl hospital : Hospital := new Hospital(pos);
     
         -- Asserts
         assertTrue( hospital.location = pos );

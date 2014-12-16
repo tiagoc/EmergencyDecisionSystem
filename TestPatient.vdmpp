@@ -1,8 +1,5 @@
 class PatientTest
 
-instance variables
-    patient1 : Patient;
-
 operations
     private assertTrue: bool ==> ()
         assertTrue(cond) == return
@@ -11,7 +8,7 @@ operations
     private createPatient: () ==> ()
     createPatient() ==
     (
-        patient1 := new Patient("Pacient", <Male>, 23, <Serious>);
+        dcl patient1 : Patient := new Patient("Pacient", <Male>, 23, <Serious>);
     
         -- Asserts
         assertTrue( patient1.name  = "Pacient" );

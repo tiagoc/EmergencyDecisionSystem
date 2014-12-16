@@ -1,8 +1,5 @@
 class TransportTest
 
-instance variables
-    transport : Transport;
-
 operations
     private assertTrue: bool ==> ()
         assertTrue(cond) == return
@@ -11,7 +8,7 @@ operations
     private createTransport: () ==> ()
     createTransport() ==
     (
-        transport := new Transport(<Ambulance>);
+        dcl transport : Transport := new Transport(<Ambulance>);
     
         -- Asserts
         assertTrue( transport.type  = <Ambulance> );
