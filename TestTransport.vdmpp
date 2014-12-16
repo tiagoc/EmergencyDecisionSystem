@@ -1,4 +1,4 @@
-class TransportTest
+class TestTransport
 
 operations
     private assertTrue: bool ==> ()
@@ -17,7 +17,7 @@ operations
     public static main: () ==> ()
     main() ==
     (
-        new TransportTest().createTransport();
+        new TestTransport().createTransport();
     );
     
-end TransportTest
+end TestTransport

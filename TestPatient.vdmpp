@@ -1,4 +1,4 @@
-class PatientTest
+class TestPatient
 
 operations
     private assertTrue: bool ==> ()
@@ -20,7 +20,7 @@ operations
     public static main: () ==> ()
     main() ==
     (
-        new PatientTest().createPatient();
+        new TestPatient().createPatient();
     );
 
-end PatientTest
+end TestPatient

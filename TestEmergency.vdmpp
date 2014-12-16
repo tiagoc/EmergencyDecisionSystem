@@ -1,4 +1,4 @@
-class EmergencyTest
+class TestEmergency
 
 operations
     private assertTrue: bool ==> ()
@@ -22,7 +22,7 @@ operations
     public static main: () ==> ()
     main() ==
     (
-        new EmergencyTest().createEmergency();
+        new TestEmergency().createEmergency();
     );
     
-end EmergencyTest
+end TestEmergency

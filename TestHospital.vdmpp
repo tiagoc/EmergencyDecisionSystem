@@ -1,4 +1,4 @@
-class HospitalTest
+class TestHospital
 
 operations
     private assertTrue: bool ==> ()
@@ -18,7 +18,7 @@ operations
     public static main: () ==> ()
     main() ==
     (
-        new HospitalTest().createHospital();
+        new TestHospital().createHospital();
     );
     
-end HospitalTest
+end TestHospital
