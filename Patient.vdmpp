@@ -1,0 +1,19 @@
+class Patient
+
+types
+	public String = seq of char;
+	public Age = nat;
+	public Gender = <Male> | <Female>;
+	public Injury_Status = <Serious> | <Medium> | <Light>;
+	public Loc = Location;
+	
+instance variables
+	private name: String;
+	private gender: Gender;
+	private age: Age;
+	private injury_status: Injury_Status;
+	private loc: Loc;
+
+
+
+end Patient

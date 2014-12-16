@@ -1,0 +1,10 @@
+class Transport
+
+types
+	public TypeOfVehicle = <Motorcycle> | <Ambulance> | <EmergencyCar> | <Heli>;
+
+values
+	
+
+
+end Transport
