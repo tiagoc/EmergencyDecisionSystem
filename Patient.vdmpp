@@ -5,22 +5,25 @@ types
 	public Age = nat;
 	public Gender = <Male> | <Female>;
 	public Injury_Status = <Serious> | <Medium> | <Light>;
+	public Injury_Type = <Stroke> | <Accident> | <None>;
 	
 instance variables
 	public name: String;
 	public gender: Gender;
 	public age: Age;
 	public injury_status: Injury_Status;
+	public injury_type: Injury_Type;
 	
 operations
 
-    public Patient: String * Gender * Age * Injury_Status  ==> Patient
-	Patient(nam, gen, ag, inj) == 
+    public Patient: String * Gender * Age * Injury_Status * Injury_Type  ==> Patient
+	Patient(nam, gen, ag, inj, injType) == 
 	(
         name := nam;
         gender := gen ;
         age := ag;
         injury_status := inj;
+        injury_type := injType;
         return self;
 	)
 	pre ag > 0 and len nam > 0

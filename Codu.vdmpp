@@ -1,9 +1,24 @@
 class CODU
 
-types
+types    
+    public VectHospitals = seq of Hospital;
+    public VectEmergency = seq of Emergency;
+    
+instance variables
+    public hospitals : VectHospitals;
+    public emergencies : VectEmergency;
 
+operations
 
-
+    public CODU: VectHospitals * VectEmergency ==> CODU
+        CODU(hosp, emerg) == 
+        (
+            hospitals := hosp;
+            emergencies := emerg;
+            return self;
+        )
+    pre len hosp > 0; 
+    --post hospitals = hosp and emergencies = emerg;
 
 
 

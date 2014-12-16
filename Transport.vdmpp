@@ -5,6 +5,7 @@ types
 
 instance variables
 	public type: TypeOfVehicle;
+	public velocity: real;
 	
 operations
     
@@ -12,6 +13,7 @@ operations
     Transport(t) == 
     (
         type := t;
+                
         return self;
     )
     post type = t;

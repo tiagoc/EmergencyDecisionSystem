@@ -1,0 +1,37 @@
+class TestCodu
+
+types    
+    public VectHospitals = seq of Hospital;
+    public VectEmergency = seq of Emergency;
+
+operations
+    private assertTrue: bool ==> ()
+        assertTrue(cond) == return
+    pre cond;
+        
+    private createCodu: () ==> ()
+    createCodu() ==
+    (
+        dcl hospital : Hospital;
+        dcl hospitals : VectHospitals := [];
+        dcl emergencies : VectEmergency := [];
+        dcl codu : CODU;
+        
+        -- Add hospitals
+        hospital := new Hospital( new Location(1, 2) );
+        hospital := new Hospital( new Location(100, 500) );
+        
+        -- Create codu
+        codu := new CODU(hospitals, emergencies);
+    
+        -- Asserts
+        assertTrue( 1 = 1 );
+    );
+
+    public static main: () ==> ()
+    main() ==
+    (
+        new TestCodu().createCodu();
+    );
+
+end TestCodu
