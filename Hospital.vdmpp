@@ -1,11 +1,29 @@
 class Hospital
 
 types
+<<<<<<< HEAD
 	public Loc = Location;
 
 	
 instance variables
 
+=======
+	--public Specialties = <Oncology> | <Cardiology>; -- ....
+	
+instance variables
+	--public specialties: seq of Specialties;
+	public location : Location;
+	
+operations
+	
+    public Hospital: Location ==> Hospital
+    Hospital(loc) == 
+    (
+        location := loc;
+        return self;
+    )
+    post location = loc;
+>>>>>>> origin/master
 
 
 

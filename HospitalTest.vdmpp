@@ -1,0 +1,28 @@
+class HospitalTest
+
+instance variables
+    hospital : Hospital;
+    pos : Location;
+
+operations
+    private assertTrue: bool ==> ()
+        assertTrue(cond) == return
+    pre cond;
+        
+    private createHospital: () ==> ()
+    createHospital() ==
+    (
+        pos := new Location(5, 0);
+        hospital := new Hospital(pos);
+    
+        -- Asserts
+        assertTrue( hospital.location = pos );
+    );
+
+    public static main: () ==> ()
+    main() ==
+    (
+        new HospitalTest().createHospital();
+    );
+    
+end HospitalTest

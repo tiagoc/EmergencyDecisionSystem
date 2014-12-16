@@ -1,10 +1,24 @@
 class Emergency
 
 types
-	public Loc = Location;
 	public road_access = <Easy> | <Moderate> | <Hard>;
-	public Pat = Patient;
 	
+instance variables
+    public location : Location;
+    public patient : Patient;
+    public road : road_access;
+
+operations
+
+    public Emergency: Location * Patient * road_access  ==> Emergency
+        Emergency(loc, p, r) == 
+        (
+            location := loc;
+            patient := p;
+            road := r;
+            return self;
+        )
+    post location = loc and patient = p and road = r;
 	
 
 

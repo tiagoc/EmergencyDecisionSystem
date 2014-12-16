@@ -3,8 +3,17 @@ class Transport
 types
 	public TypeOfVehicle = <Motorcycle> | <Ambulance> | <EmergencyCar> | <Heli>;
 
-values
+instance variables
+	public type: TypeOfVehicle;
 	
-
+operations
+    
+    public Transport: TypeOfVehicle  ==> Transport
+    Transport(t) == 
+    (
+        type := t;
+        return self;
+    )
+    post type = t;
 
 end Transport
