@@ -8,6 +8,7 @@ types
 	public Injury_Type = <Stroke> | <Accident> | <Disease> | <Labor> | <None>;
 	public Contact = nat;
 	
+	
 instance variables
 	public name: String;
 	public gender: Gender;
@@ -15,6 +16,7 @@ instance variables
 	public injury_status: Injury_Status;
 	public injury_type: Injury_Type;
 	public contact: Contact;
+	inv contact <= 999999999;
 	
 operations
 
@@ -29,7 +31,7 @@ operations
 	        contact := cont;
 	        return self;
 		)
-    pre ag > 0 and len nam > 0 and cont <= 999999999
+    pre ag > 0 and len nam > 0
     post name = nam and gender = gen and age = ag and injury_status = inj;
 
 end Patient
