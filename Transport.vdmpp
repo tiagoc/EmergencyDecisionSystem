@@ -14,12 +14,10 @@ operations
     (
         type := t;
         velocity := getVelocity(t);
-                
         return self;
     )
     post type = t;
     
-    -- Computes the total amount in a bag of coins
     public getVelocity: TypeOfVehicle ==> real
     getVelocity(veic) ==
     (

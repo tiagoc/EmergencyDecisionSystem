@@ -33,9 +33,9 @@ operations
         
         -- Emergency
         emergency := new Emergency(
-                new Location(100, 0), 
+                new Location(1, 0), 
                 new Patient("Pacient", <Male>, 23, <Serious>, <Stroke>, 960000), 
-                <Easy> 
+                <Hard> 
         );
         
         codu.pushEmergency(emergency);
@@ -49,8 +49,8 @@ operations
                
         tmpTransport := codu.getBestVeihicle( 
             tmpHospital.transports, 
-            emergency.time, 
-            tmpHospital.location.calculate_distance(emergency.location) 
+            emergency, 
+            tmpHospital.location.calculate_distance(emergency.location)
         );
         
         --IO`println( available ); 
@@ -58,7 +58,6 @@ operations
         
         -- Find transport
         assertTrue( tmpTransport.type <> <None> );
-        
         
         IO`println( tmpHospital.transports );
         
