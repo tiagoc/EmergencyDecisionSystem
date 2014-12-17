@@ -9,7 +9,7 @@ operations
     createHospital() ==
     (
         dcl pos : Location := new Location(5, 0);
-        dcl hospital : Hospital := new Hospital(pos);
+        dcl hospital : Hospital := new Hospital(pos, ["NONE"]);
     
         -- Asserts
         assertTrue( hospital.location = pos );

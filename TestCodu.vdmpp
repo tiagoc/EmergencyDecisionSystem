@@ -15,8 +15,8 @@ operations
         dcl codu : CODU := new CODU();
         
         -- Add hospitals
-        dcl hosp1 : Hospital := new Hospital( new Location(0, 0) );
-        dcl hosp2 : Hospital := new Hospital( new Location(500, 0) );
+        dcl hosp1 : Hospital := new Hospital( new Location(0, 0), ["Operations"] );
+        dcl hosp2 : Hospital := new Hospital( new Location(500, 0), ["Operations", "Cardiology", "XRAY"]  );
         dcl tmpHospital : Hospital;
         dcl tmpTransport : Transport;
         dcl available : VectHospitals := [];
@@ -40,7 +40,7 @@ operations
         
         codu.pushEmergency(emergency);
                
-        available := codu.getAvailableHospitals( codu.hospitals, emergency );
+        available := codu.getAvailableHospitals( codu.hospitals );
         
         -- Not empty
         assertTrue( len available <> 0 );
@@ -66,10 +66,35 @@ operations
         
         IO`println( tmpHospital.transports );
     );
+    
+    public testGetByService: () ==> ()
+    testGetByService() ==
+    (
+    	dcl codu : CODU := new CODU();
+  		dcl hosp1 : Hospital := new Hospital( new Location(0, 0), ["Operations"] );
+      dcl hosp2 : Hospital := new Hospital( new Location(500, 0), ["Operations", "Cardiology", "XRAY"]  );
+      dcl hosp3 : Hospital := new Hospital( new Location(0, 500), ["XRAY"]  );
+      dcl suitable : VectHospitals := [];
+      dcl HospitalsWithOperations : VectHospitals := [hosp1, hosp2];
+      
+      codu.pushHospital( hosp1 );
+      codu.pushHospital( hosp2 );
+      codu.pushHospital( hosp3 );
+        
+    	suitable := codu.getHospitalsByService(codu.hospitals, "Operations" );
+    	
+    	assertTrue(suitable = HospitalsWithOperations);
+    	
+    	--IO`println(suitable);
+    	
+    );
+    
 
     public static main: () ==> ()
     main() ==
     (
+    		
+    		
         new TestCodu().createCodu();
     );
     
