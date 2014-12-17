@@ -1,11 +1,12 @@
 class Hospital
 
-types
-	public Loc = Location;
-
-	
+types    
+    public VectTransports = seq of Transport;
+    --public Specialties = <Stroke> | <Accident> | <Disease> | <Labor> | <None>;
+    	
 instance variables
 	public location : Location;
+	public transports : VectTransports := [];
 	
 operations
 	
@@ -17,5 +18,9 @@ operations
     )
     post location = loc;
 
+    public pushTransport: Transport ==> ()
+        pushTransport(x) == transports := [x] ^ transports
+    ;
+    
 
 end Hospital

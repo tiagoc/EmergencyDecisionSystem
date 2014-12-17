@@ -3,6 +3,7 @@ class CODU
 types    
     public VectHospitals = seq of Hospital;
     public VectEmergency = seq of Emergency;
+    public VectTransports = seq of Transport;
     
 instance variables
     public hospitals : VectHospitals := [];
@@ -15,8 +16,6 @@ operations
         (
             return self;
         )
-    --pre len hosp > 0; 
-    --post hospitals = hosp and emergencies = emerg;
     ;
 
     public pushHospital: Hospital ==> ()
@@ -27,18 +26,46 @@ operations
         pushEmergency(x) == emergencies := [x] ^ emergencies
     ;
     
-    public getClosestHospital: Location ==> Hospital
-    getClosestHospital(pos) ==
+    public getClosestHospital: VectHospitals * Location ==> Hospital
+    getClosestHospital(vect, pos) ==
     (
-        dcl bestHospital : Hospital := hospitals(1);
+        dcl bestHospital : Hospital := vect(1);
     
-        for i = 1 to len hospitals do
-            if ( hospitals(i).location.calculate_distance(pos) < bestHospital.location.calculate_distance(pos) ) 
-                then  bestHospital := hospitals(i); 
-                
+        for i = 1 to len vect do
+            if ( vect(i).location.calculate_distance(pos) < bestHospital.location.calculate_distance(pos) ) 
+                then  bestHospital := vect(i); 
+                                
         return bestHospital;
     )
-    pre len hospitals > 0
+    pre len vect > 0
+    ; 
+    
+    public getAvailableHospitals: VectHospitals * Emergency ==> VectHospitals
+    getAvailableHospitals(vect, emergency) ==
+    (
+        dcl available : VectHospitals := [];
+    
+        for i = 1 to len vect do
+            if ( len vect(i).transports > 0 ) 
+                then available := [vect(i)] ^ available;
+                
+        return available;
+    )
+    pre len vect > 0
+    ; 
+    
+    public getBestVeihicle: VectTransports * nat * real ==> Transport
+    getBestVeihicle(vect, time, distance) ==
+    (
+        dcl best : Transport := vect(1);
+    
+        for i = 1 to len vect do
+            -- Distance and velocity in meters per hour
+            if ( (distance/vect(i).velocity)*60 <= time and vect(i).velocity < best.velocity ) 
+                then best := vect(i);
+            --vect(i).velocity*distance < time and 
+        return best;    
+    )
     ; 
 
 end CODU

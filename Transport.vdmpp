@@ -27,10 +27,11 @@ operations
     (
         dcl vel : real := 0;
                 
-        if ( veic = <Motorcycle> ) then vel := 60
-        else if ( veic = <Ambulance> ) then vel := 40
-        else if ( veic = <EmergencyCar> ) then vel := 45
-        else if ( veic = <Heli> ) then vel := 200
+        -- Set velocity in meters per hour
+        if ( veic = <Motorcycle> ) then vel := 60000
+        else if ( veic = <Ambulance> ) then vel := 40000
+        else if ( veic = <EmergencyCar> ) then vel := 45000
+        else if ( veic = <Heli> ) then vel := 200000
         else vel := -1; 
         
         return vel;

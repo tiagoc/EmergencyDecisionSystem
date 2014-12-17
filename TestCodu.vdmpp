@@ -15,22 +15,41 @@ operations
         dcl codu : CODU := new CODU();
         
         -- Add hospitals
-        codu.pushHospital( new Hospital( new Location(1, 2) ) );
-        codu.pushHospital( new Hospital( new Location(100, 500) ) );
+        dcl hosp1 : Hospital := new Hospital( new Location(1, 2) );
+        dcl hosp2 : Hospital := new Hospital( new Location(10, 2) );
+        dcl tmpHospital : Hospital;
+        dcl tmpTransport : Transport;
+        dcl available : VectHospitals := [];
+        dcl emergency : Emergency;
+        
+        -- Transport
+        hosp1.pushTransport( new Transport(<Ambulance>) );
+        hosp2.pushTransport( new Transport(<Heli>) );
+        
+        codu.pushHospital( hosp1 );
+        codu.pushHospital( hosp2 );
         
         -- Emergency
-        codu.pushEmergency( 
-            new Emergency(
-                new Location(100, 400), 
+        emergency := new Emergency(
+                new Location(1, 3), 
                 new Patient("Pacient", <Male>, 23, <Serious>, <Stroke>, 960000), 
                 <Easy> 
-            )
         );
         
-       
-        IO`println(codu); 
+        codu.pushEmergency(emergency);
+               
+        available := codu.getAvailableHospitals( codu.hospitals, emergency );
+               
+        tmpHospital := codu.getClosestHospital( available, emergency.location );
         
-        IO`println( codu.getClosestHospital( codu.emergencies(1).location ) ); 
+        tmpTransport := codu.getBestVeihicle( 
+            tmpHospital.transports, 
+            emergency.time, 
+            tmpHospital.location.calculate_distance(emergency.location) 
+        );
+        
+        IO`println( available ); 
+        IO`println( tmpHospital ); 
         
         
         
