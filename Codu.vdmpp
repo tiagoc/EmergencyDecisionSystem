@@ -42,6 +42,20 @@ operations
     pre len vect > 0
     ; 
     
+    public removeEmergency: VectEmergency * Emergency ==> VectEmergency
+    removeEmergency(vect, t) ==
+    (    
+        dcl newVector : VectEmergency := [];
+        
+        for i = 1 to len vect do
+            if ( vect(i) <> t ) 
+                then  newVector := [vect(i)] ^ newVector;
+                                
+        return newVector;
+    )
+    pre len vect > 0
+    ; 
+    
     public getClosestHospital: VectHospitals * Location ==> Hospital
     getClosestHospital(vect, pos) ==
     (
@@ -162,8 +176,11 @@ operations
     	
     	transport := getBestVeihicle(closest.transports, emergency, distance);
     	
-    	-- Remove it from the available
+    	-- Remove it from the transports available
     	closest.transports := removeTransport(closest.transports, transport); 
+    	
+        -- Remove emergency
+        emergencies := removeEmergency(emergencies, emergency); 
     		
     	return transport;
     )

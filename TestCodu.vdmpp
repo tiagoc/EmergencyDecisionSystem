@@ -17,13 +17,13 @@ operations
       dcl hosp2 : Hospital := new Hospital( new Location(500, 0), ["General", "Operations", "Cardiology", "XRAY"]  );
       dcl hosp3 : Hospital := new Hospital( new Location(0, 500), ["General", "XRAY"]  );
       dcl suitable : VectHospitals := [];
-      dcl HospitalsWithOperations : VectHospitals := [hosp1, hosp2];
+      dcl HospitalsWithOperations : VectHospitals := [hosp2, hosp1];
       
       -- Add hospitals
-      codu.pushHospital( hosp1 );
       codu.pushHospital( hosp2 );
+      codu.pushHospital( hosp1 );
       codu.pushHospital( hosp3 );
-        
+             
       suitable := codu.getHospitalsByService(codu.hospitals, "Operations" );
     	
       assertTrue(suitable = HospitalsWithOperations);
@@ -36,16 +36,22 @@ operations
       dcl codu : CODU := new CODU();
       dcl hosp1 : Hospital := new Hospital( new Location(0, 0), ["General", "Operations"] );
       dcl hosp2 : Hospital := new Hospital( new Location(500, 0), ["General", "Operations", "Cardiology", "XRAY"]  );
-      dcl hosp3 : Hospital := new Hospital( new Location(0, 500), ["General", "XRAY"]  );
+      dcl hosp3 : Hospital := new Hospital( new Location(0, 500), ["General", "XRAY", "Operations", "Cardiology"]  );
       dcl transport : Transport;
-      dcl patient: Patient := new Patient("Tiago", <Male>, 23, <Medium>, <Accident>, 964936931);
+      dcl patient: Patient := new Patient("Tiago", <Male>, 23, <Medium>, <Stroke>, 964936931);
+      dcl patient2: Patient := new Patient("Tiago", <Male>, 23, <Medium>, <Disease>, 964936931);
       dcl loc : Location := new Location(0,550);
       dcl accident : Emergency := new Emergency(loc, patient, <Easy>);
+      dcl accident2 : Emergency := new Emergency(loc, patient2, <Hard>);
       
       -- Add hospitals
       codu.pushHospital( hosp1 );
-      codu.pushHospital( hosp2 );
       codu.pushHospital( hosp3 );
+      codu.pushHospital( hosp2 );
+      
+      -- Add emergency
+      codu.pushEmergency( accident );
+      codu.pushEmergency( accident2 );
       
       -- Add transports
       hosp1.pushTransport( new Transport(<EmergencyCar>) );
@@ -63,14 +69,23 @@ operations
       transport := codu.determineSalvationMeans(codu.hospitals, accident);
       
       assertTrue(transport.type=<Ambulance>);
+            
+      -- Check transport (for next emergency)
+      transport := codu.determineSalvationMeans(codu.hospitals, accident2);
+      
+      assertTrue(transport.type=<Motorcycle>);
       
       -- New accident
-      accident := new Emergency(loc, patient, <Hard>);
+      patient := new Patient("Tiago", <Male>, 23, <Medium>, <Labor>, 964936931);
+      accident := new Emergency(loc, patient, <Moderate>);
+      
+      -- Add emergency
+      codu.pushEmergency( accident );
       
       -- Check transport
       transport := codu.determineSalvationMeans(codu.hospitals, accident);
       
-      assertTrue(transport.type=<Motorcycle>);
+      assertTrue(transport.type=<EmergencyCar>);
     );
     
     public testNoVeihicleAvailable: () ==> ()
@@ -79,7 +94,7 @@ operations
         dcl codu : CODU := new CODU();
         dcl hosp1 : Hospital := new Hospital( new Location(0, 0), ["General", "Operations"] );
         dcl transport : Transport;
-        dcl patient: Patient := new Patient("Tiago", <Male>, 23, <Medium>, <Accident>, 964936931);
+        dcl patient: Patient := new Patient("Tiago", <Male>, 23, <Light>, <Labor>, 964936931);
         dcl loc : Location := new Location(0, 1);
         dcl accident : Emergency := new Emergency(loc, patient, <Easy>);
       
