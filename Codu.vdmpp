@@ -85,7 +85,7 @@ operations
                             then best := vect(i)
                         else if ( vect(i).type = <Ambulance> and best.type <> <EmergencyCar> and best.type <> <Motorcycle> ) 
                             then best := vect(i)
-                        else best := vect(i))
+                        else if ( best.type = <None> ) then best := vect(i))
                 else if ( emergency.road = <Moderate> )
                     then 
                         (if ( vect(i).type = <EmergencyCar> ) 
@@ -94,7 +94,7 @@ operations
                             then best := vect(i)
                         else if ( vect(i).type = <Motorcycle> and best.type <> <Ambulance> and best.type <> <EmergencyCar> ) 
                             then best := vect(i)
-                        else best := vect(i))
+                        else if ( best.type = <None> ) then best := vect(i))
                 else if ( emergency.road = <Easy> )
                     then 
                         (if ( vect(i).type = <Ambulance> ) 
@@ -103,7 +103,7 @@ operations
                             then best := vect(i)
                         else if ( vect(i).type = <Motorcycle> and best.type <> <EmergencyCar> and best.type <> <Ambulance> ) 
                             then best := vect(i)
-                        else best := vect(i));
+                        else if ( best.type = <None> ) then best := vect(i));
                         
                 
         return best;    

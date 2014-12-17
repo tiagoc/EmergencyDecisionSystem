@@ -9,7 +9,7 @@ operations
         assertTrue(cond) == return
     pre cond;
         
-    private createCodu: () ==> ()
+    public createCodu: () ==> ()
     createCodu() ==
     (
         dcl codu : CODU := new CODU();
@@ -25,13 +25,14 @@ operations
         -- Transport
         hosp1.pushTransport( new Transport(<EmergencyCar>) );
         hosp1.pushTransport( new Transport(<Ambulance>) );
+        hosp1.pushTransport( new Transport(<Motorcycle>) );
         hosp1.pushTransport( new Transport(<Heli>) );
         hosp2.pushTransport( new Transport(<Heli>) );
         
         codu.pushHospital( hosp1 );
         codu.pushHospital( hosp2 );
         
-        -- Emergency
+        -- Emergency (choose Motorcycle)
         emergency := new Emergency(
                 new Location(1, 0), 
                 new Patient("Pacient", <Male>, 23, <Serious>, <Stroke>, 960000), 
@@ -58,6 +59,9 @@ operations
         
         -- Find transport
         assertTrue( tmpTransport.type <> <None> );
+        
+        -- Check find right
+        assertTrue( tmpTransport.type = <Motorcycle> );
         
         IO`println( tmpHospital.transports );
         
