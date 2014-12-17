@@ -1,7 +1,7 @@
 class Transport
 
 types
-	public TypeOfVehicle = <Motorcycle> | <Ambulance> | <EmergencyCar> | <Heli>;
+	public TypeOfVehicle = <Motorcycle> | <Ambulance> | <EmergencyCar> | <Heli> | <None>;
 
 instance variables
 	public type: TypeOfVehicle;
@@ -14,8 +14,6 @@ operations
     (
         type := t;
         velocity := getVelocity(t);
-        
-        --IO`println(velocity);
                 
         return self;
     )
@@ -28,10 +26,10 @@ operations
         dcl vel : real := 0;
                 
         -- Set velocity in meters per hour
-        if ( veic = <Motorcycle> ) then vel := 60000
-        else if ( veic = <Ambulance> ) then vel := 40000
-        else if ( veic = <EmergencyCar> ) then vel := 45000
-        else if ( veic = <Heli> ) then vel := 200000
+        if ( veic = <Motorcycle> ) then vel := 2000
+        else if ( veic = <Ambulance> ) then vel := 1000
+        else if ( veic = <EmergencyCar> ) then vel := 1500
+        else if ( veic = <Heli> ) then vel := 10000
         else vel := -1; 
         
         return vel;

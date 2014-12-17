@@ -15,8 +15,8 @@ operations
         dcl codu : CODU := new CODU();
         
         -- Add hospitals
-        dcl hosp1 : Hospital := new Hospital( new Location(1, 2) );
-        dcl hosp2 : Hospital := new Hospital( new Location(10, 2) );
+        dcl hosp1 : Hospital := new Hospital( new Location(0, 0) );
+        dcl hosp2 : Hospital := new Hospital( new Location(500, 0) );
         dcl tmpHospital : Hospital;
         dcl tmpTransport : Transport;
         dcl available : VectHospitals := [];
@@ -33,7 +33,7 @@ operations
         
         -- Emergency
         emergency := new Emergency(
-                new Location(1, 3), 
+                new Location(100, 0), 
                 new Patient("Pacient", <Male>, 23, <Serious>, <Stroke>, 960000), 
                 <Easy> 
         );
@@ -41,9 +41,12 @@ operations
         codu.pushEmergency(emergency);
                
         available := codu.getAvailableHospitals( codu.hospitals, emergency );
+        
+        -- Not empty
+        assertTrue( len available <> 0 );
                
         tmpHospital := codu.getClosestHospital( available, emergency.location );
-        
+               
         tmpTransport := codu.getBestVeihicle( 
             tmpHospital.transports, 
             emergency.time, 
@@ -53,12 +56,15 @@ operations
         --IO`println( available ); 
         IO`println( tmpTransport ); 
         
+        -- Find transport
+        assertTrue( tmpTransport.type <> <None> );
         
         
-       
-    
-        -- Asserts
-        assertTrue( 1 = 1 );
+        IO`println( tmpHospital.transports );
+        
+        tmpHospital.transports := codu.removeTransport(tmpHospital.transports, tmpTransport);
+        
+        IO`println( tmpHospital.transports );
     );
 
     public static main: () ==> ()

@@ -26,6 +26,20 @@ operations
         pushEmergency(x) == emergencies := [x] ^ emergencies
     ;
     
+    public removeTransport: VectTransports * Transport ==> VectTransports
+    removeTransport(vect, t) ==
+    (    
+        dcl newVector : VectTransports := [];
+        
+        for i = 1 to len vect do
+            if ( vect(i) <> t ) 
+                then  newVector := [vect(i)] ^ newVector;
+                                
+        return newVector;
+    )
+    pre len vect > 0
+    ; 
+    
     public getClosestHospital: VectHospitals * Location ==> Hospital
     getClosestHospital(vect, pos) ==
     (
@@ -57,18 +71,15 @@ operations
     public getBestVeihicle: VectTransports * real * real ==> Transport
     getBestVeihicle(vect, time, distance) ==
     (
-        dcl best : Transport := vect(1);
-        
-        IO`println( "Distance" ); 
-        IO`println( distance );
+        dcl best : Transport := new Transport(<None>);
     
         for i = 1 to len vect do
             -- Distance and velocity in metres per hour
-            if ( (distance/vect(i).velocity) <= time and vect(i).velocity < best.velocity ) 
+            if ( (distance/vect(i).velocity) <= time and (best.velocity = -1 or vect(i).velocity < best.velocity) ) 
                 then best := vect(i);
                 
         return best;    
-    )
+    )   
     ; 
 
 end CODU
