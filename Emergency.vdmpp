@@ -7,7 +7,7 @@ instance variables
     public location : Location;
     public patient : Patient;
     public road : road_access;
-    public time : nat := 0;
+    public time : real := 0;
 
 operations
 
@@ -18,9 +18,10 @@ operations
             patient := p;
             road := r;
             
-            if ( p.injury_status = <Serious> ) then time := 10
-            else if ( p.injury_status = <Medium> ) then time := 30
-            else if ( p.injury_status = <Light> ) then time := 60;
+            -- Divide by 60 to get time in hours
+            if ( p.injury_status = <Serious> ) then time := 10/60
+            else if ( p.injury_status = <Medium> ) then time := 30/60
+            else if ( p.injury_status = <Light> ) then time := 60/60;
             
             return self;
         )

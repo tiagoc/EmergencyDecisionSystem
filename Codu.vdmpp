@@ -54,16 +54,19 @@ operations
     pre len vect > 0
     ; 
     
-    public getBestVeihicle: VectTransports * nat * real ==> Transport
+    public getBestVeihicle: VectTransports * real * real ==> Transport
     getBestVeihicle(vect, time, distance) ==
     (
         dcl best : Transport := vect(1);
+        
+        IO`println( "Distance" ); 
+        IO`println( distance );
     
         for i = 1 to len vect do
-            -- Distance and velocity in meters per hour
-            if ( (distance/vect(i).velocity)*60 <= time and vect(i).velocity < best.velocity ) 
+            -- Distance and velocity in metres per hour
+            if ( (distance/vect(i).velocity) <= time and vect(i).velocity < best.velocity ) 
                 then best := vect(i);
-            --vect(i).velocity*distance < time and 
+                
         return best;    
     )
     ; 

@@ -23,7 +23,9 @@ operations
         dcl emergency : Emergency;
         
         -- Transport
+        hosp1.pushTransport( new Transport(<EmergencyCar>) );
         hosp1.pushTransport( new Transport(<Ambulance>) );
+        hosp1.pushTransport( new Transport(<Heli>) );
         hosp2.pushTransport( new Transport(<Heli>) );
         
         codu.pushHospital( hosp1 );
@@ -48,8 +50,8 @@ operations
             tmpHospital.location.calculate_distance(emergency.location) 
         );
         
-        IO`println( available ); 
-        IO`println( tmpHospital ); 
+        --IO`println( available ); 
+        IO`println( tmpTransport ); 
         
         
         
