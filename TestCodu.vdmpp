@@ -74,9 +74,9 @@ operations
     testGetByService() ==
     (
     	dcl codu : CODU := new CODU();
-  		dcl hosp1 : Hospital := new Hospital( new Location(0, 0), ["Operations"] );
-      dcl hosp2 : Hospital := new Hospital( new Location(500, 0), ["Operations", "Cardiology", "XRAY"]  );
-      dcl hosp3 : Hospital := new Hospital( new Location(0, 500), ["XRAY"]  );
+  		dcl hosp1 : Hospital := new Hospital( new Location(0, 0), ["General", "Operations"] );
+      dcl hosp2 : Hospital := new Hospital( new Location(500, 0), ["General", "Operations", "Cardiology", "XRAY"]  );
+      dcl hosp3 : Hospital := new Hospital( new Location(0, 500), ["General", "XRAY"]  );
       dcl suitable : VectHospitals := [];
       dcl HospitalsWithOperations : VectHospitals := [hosp1, hosp2];
       
@@ -91,6 +91,46 @@ operations
     	--IO`println(suitable);
     	
     );
+    
+    
+    public testdetermineSalvationMeans: () ==> ()
+    testdetermineSalvationMeans() ==
+    (
+    	dcl codu : CODU := new CODU();
+  		dcl hosp1 : Hospital := new Hospital( new Location(0, 0), ["General", "Operations"] );
+      dcl hosp2 : Hospital := new Hospital( new Location(500, 0), ["General", "Operations", "Cardiology", "XRAY"]  );
+      dcl hosp3 : Hospital := new Hospital( new Location(0, 500), ["General", "XRAY"]  );
+      dcl transport : Transport;
+      dcl patient: Patient := new Patient("Tiago", <Male>, 23, <Medium>, <Accident>, 964936931);
+      dcl loc : Location := new Location(0,550);
+      dcl accident : Emergency := new Emergency(loc, patient, <Easy>);
+      
+      codu.pushHospital( hosp1 );
+      codu.pushHospital( hosp2 );
+      codu.pushHospital( hosp3 );
+      
+      hosp1.pushTransport( new Transport(<EmergencyCar>) );
+      hosp1.pushTransport( new Transport(<Ambulance>) );
+      hosp1.pushTransport( new Transport(<Heli>) );
+      hosp2.pushTransport( new Transport(<Heli>) );
+      hosp2.pushTransport( new Transport(<EmergencyCar>) );
+      hosp2.pushTransport( new Transport(<Ambulance>) );
+      hosp3.pushTransport( new Transport(<Heli>) );
+      hosp3.pushTransport( new Transport(<EmergencyCar>) );
+      hosp3.pushTransport( new Transport(<Ambulance>) );
+      hosp3.pushTransport( new Transport(<Heli>) );
+      
+      IO`println(codu.hospitals); 
+      
+      transport := codu.determineSalvationMeans(codu.hospitals, accident);
+      
+      assertTrue(transport.type=<Ambulance>);
+      
+     	--IO`println(transport); 
+    
+    );
+    
+    
     
 
     public static main: () ==> ()

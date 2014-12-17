@@ -5,7 +5,7 @@ types
 	public Age = nat;
 	public Gender = <Male> | <Female>;
 	public Injury_Status = <Serious> | <Medium> | <Light>;
-	public Injury_Type = <Stroke> | <Accident> | <Disease> | <Labor> | <None>;
+	public Injury_Type = <Stroke> | <Accident> | <Disease> | <Labor> | <General>;
 	public Contact = nat;
 	
 	

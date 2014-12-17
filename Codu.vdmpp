@@ -5,6 +5,7 @@ types
     public VectHospitals = seq of Hospital;
     public VectEmergency = seq of Emergency;
     public VectTransports = seq of Transport;
+    public Injury_Type = <Stroke> | <Accident> | <Disease> | <Labor> | <General>;
     
 instance variables
     public hospitals : VectHospitals := [];
@@ -125,13 +126,47 @@ operations
     pre len vect > 0
     ;
     
-    
-    --public determineBestHospital: VectHospitals * Emergency ==> ()
-    --determineBestHospital(vect, emergency) ==
-    --(
-    --	avail := getAvailableHospitals(vect);
-    --		
-    --);
+
+    public determineSalvationMeans: VectHospitals * Emergency ==> Transport
+    determineSalvationMeans(vect, emergency) ==
+    (
+    	dcl avail : VectHospitals := getAvailableHospitals(vect);
+    	dcl injury_type : Injury_Type := emergency.patient.injury_type;
+    	dcl suitable : VectHospitals;
+    	dcl closest : Hospital;
+    	dcl transport : Transport;
+    	dcl distance : real;
+    	
+    	--IO`println(avail); 
+    	
+    	cases injury_type:
+    		<General> -> (
+    									suitable := getHospitalsByService(avail, "General");
+    								 ),
+    		<Stroke> -> (
+    									suitable := getHospitalsByService(avail, "Cardiology");
+    								 ),
+    		<Accident> -> (
+    									suitable := getHospitalsByService(avail, "XRAY");
+    								 ),						 						 
+    		<Disease> -> (
+    									suitable := getHospitalsByService(avail, "General");
+    								 ),
+    		<Labor> -> (
+    									suitable := getHospitalsByService(avail, "Operations");
+    								 )
+    	end;		
+    	
+    	closest := 	getClosestHospital(suitable, emergency.location);
+    	
+    	distance := closest.location.calculate_distance(emergency.location);
+    	
+    	transport := getBestVeihicle(closest.transports, emergency.time, distance); 
+    		
+    	return transport;
+    )
+    pre len vect > 0
+    ;
     
 
 end CODU
