@@ -105,8 +105,7 @@ operations
                         else if ( vect(i).type = <Motorcycle> and best.type <> <EmergencyCar> and best.type <> <Ambulance> ) 
                             then best := vect(i)
                         else if ( best.type = <None> ) then best := vect(i));
-                        
-                
+                                     
         return best;    
     )   
     ; 
@@ -161,7 +160,10 @@ operations
     	
     	distance := closest.location.calculate_distance(emergency.location);
     	
-    	transport := getBestVeihicle(closest.transports, emergency, distance); 
+    	transport := getBestVeihicle(closest.transports, emergency, distance);
+    	
+    	-- Remove it from the available
+    	closest.transports := removeTransport(closest.transports, transport); 
     		
     	return transport;
     )

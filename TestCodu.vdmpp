@@ -8,96 +8,33 @@ operations
     private assertTrue: bool ==> ()
         assertTrue(cond) == return
     pre cond;
-        
-    public createCodu: () ==> ()
-    createCodu() ==
-    (
-        dcl codu : CODU := new CODU();
-        
-        -- Add hospitals
-        dcl hosp1 : Hospital := new Hospital( new Location(0, 0), ["Operations"] );
-        dcl hosp2 : Hospital := new Hospital( new Location(500, 0), ["Operations", "Cardiology", "XRAY"]  );
-        dcl tmpHospital : Hospital;
-        dcl tmpTransport : Transport;
-        dcl available : VectHospitals := [];
-        dcl emergency : Emergency;
-        
-        -- Transport
-        hosp1.pushTransport( new Transport(<EmergencyCar>) );
-        hosp1.pushTransport( new Transport(<Ambulance>) );
-        hosp1.pushTransport( new Transport(<Motorcycle>) );
-        hosp1.pushTransport( new Transport(<Heli>) );
-        hosp2.pushTransport( new Transport(<Heli>) );
-        
-        codu.pushHospital( hosp1 );
-        codu.pushHospital( hosp2 );
-        
-        -- Emergency (choose Motorcycle)
-        emergency := new Emergency(
-                new Location(1, 0), 
-                new Patient("Pacient", <Male>, 23, <Serious>, <Stroke>, 960000), 
-                <Hard> 
-        );
-        
-        codu.pushEmergency(emergency);
-               
-        available := codu.getAvailableHospitals( codu.hospitals );
-        
-        -- Not empty
-        assertTrue( len available <> 0 );
-               
-        tmpHospital := codu.getClosestHospital( available, emergency.location );
-               
-        tmpTransport := codu.getBestVeihicle( 
-            tmpHospital.transports, 
-            emergency, 
-            tmpHospital.location.calculate_distance(emergency.location)
-        );
-        
-        --IO`println( available ); 
-        IO`println( tmpTransport ); 
-        
-        -- Find transport
-        assertTrue( tmpTransport.type <> <None> );
-        
-        -- Check find right
-        assertTrue( tmpTransport.type = <Motorcycle> );
-        
-        IO`println( tmpHospital.transports );
-        
-        tmpHospital.transports := codu.removeTransport(tmpHospital.transports, tmpTransport);
-        
-        IO`println( tmpHospital.transports );
-    );
-    
+            
     public testGetByService: () ==> ()
     testGetByService() ==
     (
-    	dcl codu : CODU := new CODU();
-  		dcl hosp1 : Hospital := new Hospital( new Location(0, 0), ["General", "Operations"] );
+      dcl codu : CODU := new CODU();
+      dcl hosp1 : Hospital := new Hospital( new Location(0, 0), ["General", "Operations"] );
       dcl hosp2 : Hospital := new Hospital( new Location(500, 0), ["General", "Operations", "Cardiology", "XRAY"]  );
       dcl hosp3 : Hospital := new Hospital( new Location(0, 500), ["General", "XRAY"]  );
       dcl suitable : VectHospitals := [];
       dcl HospitalsWithOperations : VectHospitals := [hosp1, hosp2];
       
+      -- Add hospitals
       codu.pushHospital( hosp1 );
       codu.pushHospital( hosp2 );
       codu.pushHospital( hosp3 );
         
-    	suitable := codu.getHospitalsByService(codu.hospitals, "Operations" );
+      suitable := codu.getHospitalsByService(codu.hospitals, "Operations" );
     	
-    	assertTrue(suitable = HospitalsWithOperations);
-    	
-    	--IO`println(suitable);
-    	
+      assertTrue(suitable = HospitalsWithOperations);
     );
     
     
     public testdetermineSalvationMeans: () ==> ()
     testdetermineSalvationMeans() ==
     (
-    	dcl codu : CODU := new CODU();
-  		dcl hosp1 : Hospital := new Hospital( new Location(0, 0), ["General", "Operations"] );
+      dcl codu : CODU := new CODU();
+      dcl hosp1 : Hospital := new Hospital( new Location(0, 0), ["General", "Operations"] );
       dcl hosp2 : Hospital := new Hospital( new Location(500, 0), ["General", "Operations", "Cardiology", "XRAY"]  );
       dcl hosp3 : Hospital := new Hospital( new Location(0, 500), ["General", "XRAY"]  );
       dcl transport : Transport;
@@ -105,40 +42,63 @@ operations
       dcl loc : Location := new Location(0,550);
       dcl accident : Emergency := new Emergency(loc, patient, <Easy>);
       
+      -- Add hospitals
       codu.pushHospital( hosp1 );
       codu.pushHospital( hosp2 );
       codu.pushHospital( hosp3 );
       
+      -- Add transports
       hosp1.pushTransport( new Transport(<EmergencyCar>) );
       hosp1.pushTransport( new Transport(<Ambulance>) );
       hosp1.pushTransport( new Transport(<Heli>) );
       hosp2.pushTransport( new Transport(<Heli>) );
       hosp2.pushTransport( new Transport(<EmergencyCar>) );
       hosp2.pushTransport( new Transport(<Ambulance>) );
-      hosp3.pushTransport( new Transport(<Heli>) );
+      hosp3.pushTransport( new Transport(<Motorcycle>) );
       hosp3.pushTransport( new Transport(<EmergencyCar>) );
       hosp3.pushTransport( new Transport(<Ambulance>) );
       hosp3.pushTransport( new Transport(<Heli>) );
       
-      IO`println(codu.hospitals); 
-      
+      -- Check transport
       transport := codu.determineSalvationMeans(codu.hospitals, accident);
       
       assertTrue(transport.type=<Ambulance>);
       
-     	--IO`println(transport); 
-    
+      -- New accident
+      accident := new Emergency(loc, patient, <Hard>);
+      
+      -- Check transport
+      transport := codu.determineSalvationMeans(codu.hospitals, accident);
+      
+      assertTrue(transport.type=<Motorcycle>);
     );
     
+    public testNoVeihicleAvailable: () ==> ()
+    testNoVeihicleAvailable() ==
+    (
+        dcl codu : CODU := new CODU();
+        dcl hosp1 : Hospital := new Hospital( new Location(0, 0), ["General", "Operations"] );
+        dcl transport : Transport;
+        dcl patient: Patient := new Patient("Tiago", <Male>, 23, <Medium>, <Accident>, 964936931);
+        dcl loc : Location := new Location(0, 1);
+        dcl accident : Emergency := new Emergency(loc, patient, <Easy>);
+      
+        -- Add hospitals
+        codu.pushHospital( hosp1 );
+        
+        -- Get veihicle
+        transport := codu.getBestVeihicle(hosp1.transports, accident, hosp1.location.calculate_distance(accident.location));
+      
+        -- No vehicle returned
+        assertTrue(transport.type = <None>);
+    );
     
-    
-
     public static main: () ==> ()
     main() ==
     (
-    		
-    		
-        new TestCodu().createCodu();
+        new TestCodu().testGetByService();
+        new TestCodu().testdetermineSalvationMeans();
+        new TestCodu().testNoVeihicleAvailable();
     );
     
     
