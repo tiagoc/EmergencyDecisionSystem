@@ -1,15 +1,79 @@
-class TestCodu
+class Tests
 
 types    
     public VectHospitals = seq of Hospital;
     public VectEmergency = seq of Emergency;
 
 operations
+
     private assertTrue: bool ==> ()
         assertTrue(cond) == return
     pre cond;
+    
+    private createEmergency: () ==> ()
+    createEmergency() ==
+    (
+        dcl pos : Location := new Location(5, 0);
+        dcl patient1 : Patient := new Patient("Pacient", <Male>, 23, <Serious>, <Stroke>, 915487955);
+        dcl emergency : Emergency := new Emergency(pos, patient1, <Easy>);
+        
+    
+        -- Asserts
+        assertTrue( emergency.location = pos );
+        assertTrue( emergency.patient = patient1 );
+        assertTrue( emergency.road = <Easy> );
+    );
+    
+    private createHospital: () ==> ()
+    createHospital() ==
+    (
+        dcl pos : Location := new Location(5, 0);
+        dcl hospital : Hospital := new Hospital(pos, ["NONE"]);
+    
+        -- Asserts
+        assertTrue( hospital.location = pos );
+    );
+    
+    private TestCreateLocation: () ==> ()
+    TestCreateLocation() ==
+    (
+        dcl tempLocation : Location := new Location();
+        assertTrue(tempLocation.Pos_X = 0);
+        assertTrue(tempLocation.Pos_Y = 0);
+    );
+    
+    
+    private TestCalculateDistance: () ==> ()
+    TestCalculateDistance() ==
+    (
+        dcl tempLoc1 : Location := new Location (0,0);
+        dcl tempLoc2 : Location := new Location (0,5);
+        assertTrue(tempLoc1.calculate_distance(tempLoc2) = 5);
+    );
+    
+    private createPatient: () ==> ()
+    createPatient() ==
+    (
+        dcl patient1 : Patient := new Patient("Pacient", <Male>, 23, <Serious>, <Stroke>, 964936931);
+    
+        -- Asserts
+        assertTrue( patient1.name  = "Pacient" );
+        assertTrue( patient1.gender  = <Male> );
+        assertTrue( patient1.age  = 23 );
+        assertTrue( patient1.injury_status = <Serious> );
+        assertTrue( patient1.contact = 964936931 );
+    );
+    
+    private createTransport: () ==> ()
+    createTransport() ==
+    (
+        dcl transport : Transport := new Transport(<Ambulance>);
+    
+        -- Asserts
+        assertTrue( transport.type  = <Ambulance> );
+    );
             
-    public testGetByService: () ==> ()
+    private testGetByService: () ==> ()
     testGetByService() ==
     (
       dcl codu : CODU := new CODU();
@@ -30,7 +94,7 @@ operations
     );
     
     
-    public testdetermineSalvationMeans: () ==> ()
+    private testdetermineSalvationMeans: () ==> ()
     testdetermineSalvationMeans() ==
     (
       dcl codu : CODU := new CODU();
@@ -88,7 +152,7 @@ operations
       assertTrue(transport.type=<EmergencyCar>);
     );
     
-    public testNoVeihicleAvailable: () ==> ()
+    private testNoVeihicleAvailable: () ==> ()
     testNoVeihicleAvailable() ==
     (
         dcl codu : CODU := new CODU();
@@ -107,15 +171,22 @@ operations
         -- No vehicle returned
         assertTrue(transport.type = <None>);
     );
-    
+        
     public static main: () ==> ()
     main() ==
     (
-        new TestCodu().testGetByService();
-        new TestCodu().testdetermineSalvationMeans();
-        new TestCodu().testNoVeihicleAvailable();
+        -- Check all tests
+        new Tests().createEmergency();
+        new Tests().createHospital();
+        new Tests().TestCreateLocation();
+        new Tests().TestCalculateDistance();
+        new Tests().createPatient();
+        new Tests().createTransport();
+        new Tests().testGetByService();
+        new Tests().testdetermineSalvationMeans();
+        new Tests().testNoVeihicleAvailable();
     );
     
     
-end TestCodu
+end Tests
 
