@@ -13,9 +13,30 @@ operations
     Transport(t) == 
     (
         type := t;
+        velocity := getVelocity(t);
+        
+        --IO`println(velocity);
                 
         return self;
     )
     post type = t;
+    
+    -- Computes the total amount in a bag of coins
+    public getVelocity: TypeOfVehicle ==> real
+    getVelocity(veic) ==
+    (
+        dcl vel : real := 0;
+                
+        if ( veic = <Motorcycle> ) then vel := 60
+        else if ( veic = <Ambulance> ) then vel := 40
+        else if ( veic = <EmergencyCar> ) then vel := 45
+        else if ( veic = <Heli> ) then vel := 200
+        else vel := -1; 
+        
+        return vel;
+    )
+    
+functions 
+
 
 end Transport

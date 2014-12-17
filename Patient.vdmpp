@@ -29,7 +29,7 @@ operations
 	        contact := cont;
 	        return self;
 		)
-	pre ag > 0 and len nam > 0 and contact <= 999999999
-  post name = nam and gender = gen and age = ag and injury_status = inj;
+    pre ag > 0 and len nam > 0 and cont <= 999999999
+    post name = nam and gender = gen and age = ag and injury_status = inj;
 
 end Patient

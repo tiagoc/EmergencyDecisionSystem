@@ -12,17 +12,29 @@ operations
     private createCodu: () ==> ()
     createCodu() ==
     (
-        dcl hospital : Hospital;
-        dcl hospitals : VectHospitals := [];
-        dcl emergencies : VectEmergency := [];
-        dcl codu : CODU;
+        dcl codu : CODU := new CODU();
         
         -- Add hospitals
-        hospital := new Hospital( new Location(1, 2) );
-        hospital := new Hospital( new Location(100, 500) );
+        codu.pushHospital( new Hospital( new Location(1, 2) ) );
+        codu.pushHospital( new Hospital( new Location(100, 500) ) );
         
-        -- Create codu
-        codu := new CODU(hospitals, emergencies);
+        -- Emergency
+        codu.pushEmergency( 
+            new Emergency(
+                new Location(100, 400), 
+                new Patient("Pacient", <Male>, 23, <Serious>, <Stroke>, 960000), 
+                <Easy> 
+            )
+        );
+        
+       
+        IO`println(codu); 
+        
+        IO`println( codu.getClosestHospital( codu.emergencies(1).location ) ); 
+        
+        
+        
+       
     
         -- Asserts
         assertTrue( 1 = 1 );
@@ -33,5 +45,7 @@ operations
     (
         new TestCodu().createCodu();
     );
-
+    
+    
 end TestCodu
+

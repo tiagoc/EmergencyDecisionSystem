@@ -5,21 +5,40 @@ types
     public VectEmergency = seq of Emergency;
     
 instance variables
-    public hospitals : VectHospitals;
-    public emergencies : VectEmergency;
+    public hospitals : VectHospitals := [];
+    public emergencies : VectEmergency := [];
 
 operations
 
-    public CODU: VectHospitals * VectEmergency ==> CODU
-        CODU(hosp, emerg) == 
+    public CODU: () ==> CODU
+        CODU() == 
         (
-            hospitals := hosp;
-            emergencies := emerg;
             return self;
         )
-    pre len hosp > 0; 
+    --pre len hosp > 0; 
     --post hospitals = hosp and emergencies = emerg;
+    ;
 
-
+    public pushHospital: Hospital ==> ()
+        pushHospital(x) == hospitals := [x] ^ hospitals
+    ;
+        
+    public pushEmergency: Emergency ==> ()
+        pushEmergency(x) == emergencies := [x] ^ emergencies
+    ;
+    
+    public getClosestHospital: Location ==> Hospital
+    getClosestHospital(pos) ==
+    (
+        dcl bestHospital : Hospital := hospitals(1);
+    
+        for i = 1 to len hospitals do
+            if ( hospitals(i).location.calculate_distance(pos) < bestHospital.location.calculate_distance(pos) ) 
+                then  bestHospital := hospitals(i); 
+                
+        return bestHospital;
+    )
+    pre len hospitals > 0
+    ; 
 
 end CODU
